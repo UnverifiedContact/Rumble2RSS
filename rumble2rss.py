@@ -1,12 +1,14 @@
 from bottle import route, run
 import requests
 import sys
+import os
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
 from datetime import datetime
 from bottle import route, request, response, template
 from urllib.parse import urlparse
-# pip3 install bottle requests bs4 feedgen cheroot
+import cloudscraper
+# pip3 install bottle requests bs4 feedgen cheroot cloudscraper
 
 @route('/hello')
 def hello():
@@ -24,11 +26,10 @@ def hello():
 def main():
 
     target_url = request.query.url
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0"
-    }
-    req = requests.get(target_url, headers=headers)
-
+    
+    # Use cloudscraper to bypass Cloudflare
+    scraper = cloudscraper.create_scraper()
+    req = scraper.get(target_url)
     html_doc = req.text
 
     soup = BeautifulSoup(html_doc, 'html.parser')
@@ -77,7 +78,8 @@ def is_absolute_url(url):
 
     return bool(urlparse(url).netloc)
 
-run(host='localhost', port=8555, debug=True, server='cheroot')
+if __name__ == '__main__':
+    run(host='localhost', port=8555, debug=True, reloader=False, server='cheroot')
 
 
 

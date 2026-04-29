@@ -1,13 +1,46 @@
 # Ignore virtual environment
 myenv/
+venv/
+env/
+ENV/
 
 # Ignore Python bytecode files
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+*.so
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
 # Ignore environment variable files
 .env
+
+# Logs
+log
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Chrome driver (if using selenium)
+chromedriver
+chromedriver.exe
+
+# Debug files
+debug_html.html
 
